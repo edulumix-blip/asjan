@@ -4,8 +4,6 @@
 [build]
   base = "frontend"
   command = "npm install && npm run build"
-  # Relative to `base` (frontend/) after build → frontend/.next on disk
-  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"

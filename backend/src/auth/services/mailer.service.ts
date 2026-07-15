@@ -17,6 +17,76 @@ export class MailerService {
       greetingTimeout: 10000,
       socketTimeout: 10000,
     });
+
+    // Intercept sendMail to bypass SMTP port blocks on Render/Vercel using HTTP APIs
+    const originalSendMail = this.transporter.sendMail.bind(this.transporter);
+    this.transporter.sendMail = (async (mailOptions: any, callback?: any) => {
+      const provider = this.configService.get<string>('EMAIL_PROVIDER') || 'smtp';
+      const senderEmail = this.configService.get<string>('SENDER_EMAIL') || this.configService.get<string>('SMTP_USER') || 'noreply@edulumix.in';
+      const senderName = this.configService.get<string>('SENDER_NAME') || 'EduLumix';
+      const to = typeof mailOptions.to === 'string' ? mailOptions.to : Array.isArray(mailOptions.to) ? mailOptions.to.join(',') : '';
+
+      if (provider === 'brevo') {
+        const apiKey = this.configService.get<string>('BREVO_API_KEY');
+        if (!apiKey) {
+          throw new Error('BREVO_API_KEY is not defined in environment variables');
+        }
+
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': apiKey,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: { name: senderName, email: senderEmail },
+            to: [{ email: to }],
+            subject: mailOptions.subject,
+            htmlContent: mailOptions.html,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Brevo API returned error status ${response.status}: ${errorText}`);
+        }
+        if (callback) callback(null, { messageId: 'brevo-success' });
+        return { messageId: 'brevo-success' };
+      }
+
+      if (provider === 'resend') {
+        const apiKey = this.configService.get<string>('RESEND_API_KEY');
+        if (!apiKey) {
+          throw new Error('RESEND_API_KEY is not defined in environment variables');
+        }
+
+        const response = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: `${senderName} <${senderEmail}>`,
+            to: to,
+            subject: mailOptions.subject,
+            html: mailOptions.html,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Resend API returned error status ${response.status}: ${errorText}`);
+        }
+        if (callback) callback(null, { messageId: 'resend-success' });
+        return { messageId: 'resend-success' };
+      }
+
+      // Default SMTP
+      mailOptions.from = `"${senderName}" <${senderEmail}>`;
+      return originalSendMail(mailOptions, callback);
+    }) as any;
   }
 
   private getRoleLabel(role: string): string {

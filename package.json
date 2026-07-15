@@ -5,14 +5,14 @@
   "main": "backend/server.js",
   "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js",
-    "dev:all": "node scripts/dev-all.mjs",
-    "start:all": "npm run build:frontend && node backend/server.js",
-    "build:frontend": "cd frontend && npm run build",
-    "seed": "node backend/utils/seedSuperAdmin.js",
-    "test:backend": "npm --prefix backend test",
-    "lint:frontend": "npm --prefix frontend run lint",
+    "start": "npm run --prefix backend start",
+    "dev": "npm run --prefix backend start:dev",
+    "dev:all": "node scripts/dev-all.js",
+    "start:all": "npm run --prefix frontend build && npm run --prefix backend start",
+    "build:frontend": "npm run --prefix frontend build",
+    "seed": "echo 'Super Admin is seeded automatically on backend startup'",
+    "test:backend": "npm run --prefix backend test",
+    "lint:frontend": "npm run --prefix frontend lint",
     "verify": "npm run test:backend && npm run lint:frontend"
   },
   "keywords": [

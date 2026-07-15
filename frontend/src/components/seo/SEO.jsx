@@ -1,81 +1,63 @@
-import { Helmet } from 'react-helmet-async';
+'use client';
+
+import { useEffect } from 'react';
 
 const SEO = ({
   title = 'EduLumix - Your Complete Career Platform',
-  description = 'EduLumix is your ultimate destination for fresher jobs, free resources, courses, mock tests, and career guidance. Join 50,000+ students building successful careers.',
-  keywords = 'jobs for freshers, free resources, online courses, mock tests, tech blog, career guidance, digital products, interview preparation, job portal, education platform',
-  author = 'EduLumix Team',
-  image = 'https://edulumix.in/og-image.jpg',
-  url = 'https://edulumix.in',
-  type = 'website',
-  twitterCard = 'summary_large_image',
-  twitterHandle = '@edulumix',
-  canonical,
-  children,
+  description = 'EduLumix is your ultimate destination for fresher jobs, free resources, online courses, mock tests, and career guidance.',
+  keywords = 'jobs for freshers, free resources, online courses, mock tests',
   noIndex = false,
   structuredData
 }) => {
-  const siteUrl = import.meta.env.VITE_APP_URL || 'https://edulumix.in';
-  const fullUrl = url.startsWith('http') ? url : `${siteUrl}${url}`;
-  const canonicalUrl = canonical || fullUrl;
-
-  return (
-    <Helmet>
-      {/* Basic Meta Tags */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="author" content={author} />
-      <link rel="canonical" href={canonicalUrl} />
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.title = title;
       
-      {/* Robots */}
-      {noIndex ? (
-        <meta name="robots" content="noindex, nofollow" />
-      ) : (
-        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-      )}
+      // Update meta description
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', description);
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={type} />
-      <meta property="og:url" content={fullUrl} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="EduLumix" />
-      <meta property="og:locale" content="en_US" />
+      // Update meta keywords
+      if (keywords) {
+        let metaKeywords = document.querySelector('meta[name="keywords"]');
+        if (!metaKeywords) {
+          metaKeywords = document.createElement('meta');
+          metaKeywords.setAttribute('name', 'keywords');
+          document.head.appendChild(metaKeywords);
+        }
+        metaKeywords.setAttribute('content', keywords);
+      }
 
-      {/* Twitter */}
-      <meta name="twitter:card" content={twitterCard} />
-      <meta name="twitter:site" content={twitterHandle} />
-      <meta name="twitter:creator" content={twitterHandle} />
-      <meta name="twitter:url" content={fullUrl} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      // Update robots
+      let metaRobots = document.querySelector('meta[name="robots"]');
+      if (!metaRobots) {
+        metaRobots = document.createElement('meta');
+        metaRobots.setAttribute('name', 'robots');
+        document.head.appendChild(metaRobots);
+      }
+      metaRobots.setAttribute('content', noIndex ? 'noindex, nofollow' : 'index, follow');
 
-      {/* Additional Meta Tags */}
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-      <meta name="language" content="English" />
-      <meta name="revisit-after" content="1 days" />
-      <meta name="distribution" content="global" />
-      <meta name="rating" content="general" />
+      // Inject structured data
+      if (structuredData) {
+        const id = 'seo-structured-data';
+        let script = document.getElementById(id);
+        if (!script) {
+          script = document.createElement('script');
+          script.id = id;
+          script.type = 'application/ld+json';
+          document.head.appendChild(script);
+        }
+        script.textContent = JSON.stringify(structuredData);
+      }
+    }
+  }, [title, description, keywords, noIndex, structuredData]);
 
-      {/* Geo Tags */}
-      <meta name="geo.region" content="IN" />
-      <meta name="geo.placename" content="India" />
-
-      {/* Structured Data */}
-      {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      )}
-
-      {/* Additional children */}
-      {children}
-    </Helmet>
-  );
+  return null;
 };
 
 export default SEO;

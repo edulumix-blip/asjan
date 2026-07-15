@@ -34,26 +34,19 @@ A comprehensive MERN stack platform providing jobs, resources, courses, blogs, m
 ```
 edulumix/
 ├── backend/
-│   ├── config/          # Database configuration
-│   ├── controllers/     # Route controllers
-│   ├── middleware/      # Auth & error middleware
-│   ├── models/          # MongoDB models
-│   ├── routes/          # API routes
-│   ├── utils/           # Utility functions
-│   ├── server.js        # Express server
-│   ├── .env             # Environment variables
+│   ├── src/             # NestJS modules, controllers, schemas, services
+│   ├── test/            # Jest test files
+│   ├── .env             # Backend environment variables (Port: 5001)
+│   ├── nest-cli.json
 │   └── package.json
 │
 └── frontend/
     ├── src/
-    │   ├── components/  # Reusable components
-    │   ├── context/     # React context (Auth, Theme)
-    │   ├── pages/       # Page components
-    │   ├── services/    # API services
-    │   ├── App.jsx      # Main app component
-    │   └── main.jsx     # Entry point
-    ├── public/          # Static assets
-    ├── .env             # Environment variables
+    │   ├── app/         # Next.js App router views and components
+    │   ├── components/  # Reusable UI elements
+    │   ├── config/      # API configurations
+    │   └── services/    # Client side API calls
+    │   next.config.ts   # Next.js rewrites config (Port: 3029)
     └── package.json
 ```
 
@@ -64,75 +57,45 @@ edulumix/
 - MongoDB Atlas account
 - Git
 
-### Backend Setup
+### Quickstart (Both Frontend & Backend Concurrently)
+From project root, run:
+```bash
+npm run dev:all
+```
+This runs the backend on port `5001` and the frontend on port `3029` concurrently.
 
+### Manual Backend Setup
 1. Navigate to backend directory:
 ```bash
 cd backend
 ```
-
 2. Install dependencies:
 ```bash
 npm install
 ```
-
 3. Configure environment variables:
    - Copy `.env.example` to `.env`
-   - Update with your MongoDB URI and other settings
-
-4. Seed super admin (first time only):
+   - Update with your MongoDB URI, Port (5001), and other integrations.
+4. Start development server:
 ```bash
-npm run seed
+npm run start:dev
 ```
+Backend runs on `http://localhost:5001` (endpoints under `/api`).
 
-5. **(One-time, after removing job category "Others")** If your database still has jobs with `category: "Others"`, merge them into Non-IT:
-```bash
-npm run migrate:jobs-others
-```
-
-6. Start development server:
-```bash
-npm run dev
-```
-
-Backend runs on `http://localhost:5000`
-
-7. Run backend tests:
-```bash
-npm test
-```
-
-### Run Full Stack Together (Auto Port Detection)
-
-From project root:
-```bash
-npm run dev:all
-```
-
-This starts backend and frontend together and automatically chooses free ports if defaults are occupied.
-
-### Frontend Setup
-
+### Manual Frontend Setup
 1. Navigate to frontend directory:
 ```bash
 cd frontend
 ```
-
 2. Install dependencies:
 ```bash
 npm install
 ```
-
-3. Configure environment variables:
-   - Copy `.env.example` to `.env`
-   - Update `VITE_API_URL` to point to backend
-
-4. Start development server:
+3. Start development server on port 3029:
 ```bash
-npm run dev
+npm run dev -- -p 3029
 ```
-
-Frontend runs on `http://localhost:5173`
+Frontend runs on `http://localhost:3029`. All API calls to `/api/*` are dynamically proxied to the backend at `http://127.0.0.1:5001/api/*`.
 
 ## 🌐 Production Deployment
 

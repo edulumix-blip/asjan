@@ -19,8 +19,8 @@ const VerifiedBadge = ({ user, size = 'sm' }) => {
   };
 
   return (
-    <div 
-      className={`${sizeClasses[size]} rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm border border-white/20`}
+    <span 
+      className={`${sizeClasses[size]} rounded-full bg-blue-600 inline-flex items-center justify-center flex-shrink-0 shadow-sm border border-white/20`}
       title="Verified Super Admin"
       style={{
         background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)'
@@ -30,7 +30,7 @@ const VerifiedBadge = ({ user, size = 'sm' }) => {
         className={`${iconSizes[size]} text-white stroke-[4] font-bold`}
         strokeWidth={4}
       />
-    </div>
+    </span>
   );
 };
 

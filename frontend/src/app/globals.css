@@ -1,0 +1,280 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+
+:root {
+  --background: #f9fafb;
+  /* gray-50 */
+  --foreground: #111827;
+  /* gray-900 */
+}
+
+/* Dark class is toggled by next-themes */
+.dark {
+  --background: #11111b;
+  /* dark-300 */
+  --foreground: #f3f4f6;
+  /* gray-100 */
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+  --color-primary-950: #1e1b4b;
+
+  --color-accent-50: #fdf4ff;
+  --color-accent-100: #fae8ff;
+  --color-accent-200: #f5d0fe;
+  --color-accent-300: #f0abfc;
+  --color-accent-400: #e879f9;
+  --color-accent-500: #d946ef;
+  --color-accent-600: #c026d3;
+  --color-accent-700: #a21caf;
+  --color-accent-800: #86198f;
+  --color-accent-900: #701a75;
+  --color-accent-950: #4a044e;
+
+  --color-dark-100: #1e1e2e;
+  --color-dark-200: #181825;
+  --color-dark-300: #11111b;
+  --color-dark-800: #27273a;
+  --color-dark-900: #1a1a2a;
+
+  --color-brand-primary: #4338ca;
+  --color-brand-secondary: #c026d3;
+  --color-brand-gradient-from: #4f46e5;
+  --color-brand-gradient-to: #d946ef;
+
+  --font-sans: var(--font-geist-sans), 'Inter', sans-serif;
+  --font-display: 'Poppins', sans-serif;
+
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-scale-in: scaleIn 0.3s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode variant selector for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Shared components ported from index.css */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-300 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-300 disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 focus:ring-blue-500 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-300 disabled:opacity-50 disabled:cursor-not-allowed bg-white dark:bg-dark-100 text-gray-700 dark:text-gray-100 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-dark-200 hover:border-blue-500 focus:ring-blue-500;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-300 disabled:opacity-50 disabled:cursor-not-allowed bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-100;
+}
+
+.btn-danger {
+  @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-300 disabled:opacity-50 disabled:cursor-not-allowed bg-red-600 text-white hover:bg-red-500 focus:ring-red-500 shadow-lg shadow-red-500/25;
+}
+
+.card {
+  @apply bg-white dark:bg-dark-100 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-lg dark:shadow-xl shadow-gray-200/50 dark:shadow-black/20 overflow-hidden transition-all duration-300 hover:border-blue-500/30 hover:shadow-blue-500/10;
+}
+
+.card-hover {
+  @apply bg-white dark:bg-dark-100 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-lg dark:shadow-xl shadow-gray-200/50 dark:shadow-black/20 overflow-hidden transition-all duration-300 hover:border-blue-500/30 hover:shadow-blue-500/10 hover:-translate-y-1;
+}
+
+.input {
+  @apply w-full px-4 py-3 bg-white dark:bg-dark-200 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+}
+
+.label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+}
+
+.select {
+  @apply w-full px-4 py-3 bg-white dark:bg-dark-200 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer;
+}
+
+.glass {
+  @apply bg-white/80 dark:bg-dark-100/80 backdrop-blur-xl border border-gray-200/50 dark:border-gray-800/50;
+}
+
+.navbar-glass {
+  @apply bg-white/90 dark:bg-dark-200/90 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent bg-[length:200%_auto];
+}
+
+.article-body {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: #374151;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.dark .article-body {
+  color: #d1d5db;
+}
+
+/* Chatbot wave/ripple animation */
+@keyframes chatbot-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.chatbot-wave-ring {
+  animation: chatbot-wave 2s ease-out infinite;
+}
+
+.btn-wave-ring {
+  animation: chatbot-wave 2s ease-out infinite;
+}
+
+/* ===== UNIFIED RESPONSIVE FULL PAGE LAYOUT SYSTEM — TIGHT RESPONSIVE GAPS ===== */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden;
+}
+
+main {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden;
+}
+
+.container,
+.container-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  margin: 0 auto !important;
+}
+
+/* Override all horizontal padding classes globally to force clean responsive side gaps */
+.px-3, .px-4, .px-5, .px-6, .px-8, .px-10, .px-12, .px-16, .px-20,
+.sm\:px-6, .sm\:px-8, .sm\:px-10, .sm\:px-12,
+.lg\:px-8, .lg\:px-12, .lg\:px-16,
+.xl\:px-20, .xl\:px-24,
+.w-full.px-8, .w-full.px-12 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+@media (min-width: 640px) {
+  .container,
+  .container-fluid {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .px-3, .px-4, .px-5, .px-6, .px-8, .px-10, .px-12, .px-16, .px-20,
+  .sm\:px-6, .sm\:px-8, .sm\:px-10, .sm\:px-12,
+  .lg\:px-8, .lg\:px-12, .lg\:px-16,
+  .xl\:px-20, .xl\:px-24,
+  .w-full.px-8, .w-full.px-12 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container,
+  .container-fluid {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  
+  .px-3, .px-4, .px-5, .px-6, .px-8, .px-10, .px-12, .px-16, .px-20,
+  .sm\:px-6, .sm\:px-8, .sm\:px-10, .sm\:px-12,
+  .lg\:px-8, .lg\:px-12, .lg\:px-16,
+  .xl\:px-20, .xl\:px-24,
+  .w-full.px-8, .w-full.px-12 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}

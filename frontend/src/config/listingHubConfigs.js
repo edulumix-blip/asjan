@@ -355,7 +355,7 @@ export const MOCK_TEST_HUB_CATEGORIES = [
     subtitle: 'Govt & national tests',
     gradient: 'from-green-700 to-emerald-900',
     ring: 'ring-green-500/30',
-    image: 'https://images.unsplash.com/photo-1606326608606-aa0b62935c98?auto=format&fit=crop&w=900&q=80',
+    image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=900&q=80',
   },
   {
     key: 'Others',

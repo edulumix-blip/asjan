@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from '@/utils/reactRouterCompat';
 import { useAuth } from '../../context/AuthContext';
 import Logo from '../../components/common/Logo';
-import { 
-  Button, 
-  Card, 
+import {
+  Button,
+  Card,
   CardContent,
   TextField,
   Label,
   InputGroup
 } from '@heroui/react';
-import { 
+import {
   Mail, Lock, Eye, EyeOff, LogIn, Shield,
   Gift, Trophy, Coins, TrendingUp, Sparkles
 } from 'lucide-react';
@@ -21,7 +21,7 @@ import SEO from '../../components/seo/SEO';
 // Rewards Info Component
 const RewardsSection = () => {
   const [activeReward, setActiveReward] = useState(0);
-  
+
   const rewards = [
     { points: '10', action: 'Post a Job', icon: '💼' },
     { points: '10', action: 'Share Resource', icon: '📚' },
@@ -44,14 +44,14 @@ const RewardsSection = () => {
           <Gift className="w-5 h-5 text-yellow-300" />
           <span className="text-white font-medium">Earn While You Contribute</span>
         </div>
-        
+
         <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
           Turn Your <span className="text-yellow-300">Skills</span> Into <span className="text-green-300">Rewards</span>
         </h2>
         <p className="text-blue-100 text-lg mb-10">
           Every contribution you make earns you points. Redeem them for real money!
         </p>
-        
+
         {/* Animated Points Display */}
         <div className="relative mb-10">
           <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-2xl shadow-orange-500/30 animate-pulse">
@@ -66,13 +66,13 @@ const RewardsSection = () => {
             {rewards[activeReward].icon}
           </div>
         </div>
-        
+
         {/* Current Action */}
         <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-8 border border-white/20">
           <p className="text-white font-semibold text-lg">{rewards[activeReward].action}</p>
           <p className="text-blue-200 text-sm">and earn {rewards[activeReward].points} points instantly!</p>
         </div>
-        
+
         {/* Points Value */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white/5 rounded-xl p-3 border border-white/10">
@@ -91,7 +91,7 @@ const RewardsSection = () => {
             <p className="text-blue-200 text-xs">Your Earnings</p>
           </div>
         </div>
-        
+
         {/* CTA Text */}
         <p className="text-blue-100 text-sm flex items-center justify-center gap-2">
           <Sparkles className="w-4 h-4 text-yellow-300" />
@@ -110,7 +110,7 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -138,7 +138,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-0 lg:min-h-[calc(100vh-4rem)] flex">
       <SEO title="Login | EduLumix" noIndex />
       {/* Left Side - Animated Services (Hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-700 relative overflow-hidden">
@@ -149,7 +149,7 @@ const Login = () => {
       </div>
 
       {/* Right Side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gray-50 dark:bg-dark-300">
+      <div className="w-full lg:w-1/2 flex items-start justify-center pt-8 sm:pt-12 lg:pt-16 pb-8 px-6 sm:px-10 lg:px-12 bg-gray-50 dark:bg-dark-300 overflow-y-auto">
         <div className="w-full max-w-md">
           {/* Logo & Header */}
           <div className="text-center mb-4">
@@ -165,13 +165,13 @@ const Login = () => {
           </div>
 
           {/* Form wrapped in HeroUI Card */}
-          <Card className="border-none shadow-xl bg-white dark:bg-dark-100">
-            <CardContent className="p-4 sm:p-5">
-              <form onSubmit={handleSubmit} className="space-y-3.5">
+          <Card className="border-none shadow-2xl bg-white dark:bg-dark-100 rounded-2xl">
+            <CardContent className="p-6 sm:p-8">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Email */}
-                <TextField className="flex flex-col gap-1 text-left">
-                  <Label className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</Label>
-                  <InputGroup className="h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-3 flex items-center bg-white dark:bg-dark-100">
+                <TextField className="flex flex-col gap-1.5 text-left">
+                  <Label className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Email Address</Label>
+                  <InputGroup className="h-12 rounded-xl border border-gray-200 dark:border-gray-700 px-4 flex items-center bg-white dark:bg-dark-100 focus-within:border-blue-500 transition-all">
                     <InputGroup.Prefix className="mr-2">
                       <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
                     </InputGroup.Prefix>
@@ -188,9 +188,9 @@ const Login = () => {
                 </TextField>
 
                 {/* Password */}
-                <TextField className="flex flex-col gap-1 text-left">
-                  <Label className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Password</Label>
-                  <InputGroup className="h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-3 flex items-center bg-white dark:bg-dark-100">
+                <TextField className="flex flex-col gap-1.5 text-left">
+                  <Label className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Password</Label>
+                  <InputGroup className="h-12 rounded-xl border border-gray-200 dark:border-gray-700 px-4 flex items-center bg-white dark:bg-dark-100 focus-within:border-blue-500 transition-all">
                     <InputGroup.Prefix className="mr-2">
                       <Lock className="w-4 h-4 text-gray-400 flex-shrink-0" />
                     </InputGroup.Prefix>
@@ -220,7 +220,7 @@ const Login = () => {
                   type="submit"
                   variant="primary"
                   isLoading={loading}
-                  className="w-full h-10 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all shadow-lg shadow-blue-500/25 mt-1"
+                  className="w-full h-12 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-lg shadow-blue-500/25 mt-2"
                   startContent={!loading && <LogIn className="w-4 h-4" />}
                 >
                   {loading ? 'Logging in...' : 'Login'}

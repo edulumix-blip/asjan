@@ -53,6 +53,16 @@ export class AuthService {
       throw new ForbiddenException('Cannot create super admin account');
     }
 
+    const VALID_SIGNUP_ROLES = [
+      'resource_poster',
+      'job_poster',
+      'blog_poster',
+      'tech_blog_poster',
+      'digital_product_poster',
+      'others',
+    ];
+    const userRole = (role && VALID_SIGNUP_ROLES.includes(role)) ? role : 'others';
+
     // Verify OTP state
     const otpRecord = await this.otpModel.findOne({
       email: email.toLowerCase(),
@@ -67,7 +77,7 @@ export class AuthService {
       name,
       email,
       password,
-      role: role || 'others',
+      role: userRole,
       status: 'pending',
     });
 

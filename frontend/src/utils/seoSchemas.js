@@ -10,7 +10,7 @@ export const generateOrganizationSchema = () => ({
   url: BASE_DOMAIN,
   logo: `${BASE_DOMAIN}/favicon.svg`,
   description: 'EduLumix is your ultimate destination for fresher jobs, free resources, courses, mock tests, and career guidance.',
-  email: 'support@edulumix.in',
+  email: 'edulumix@gmail.com',
   telephone: '+91-8272946202',
   address: {
     '@type': 'PostalAddress',
@@ -27,7 +27,7 @@ export const generateOrganizationSchema = () => ({
   ],
   contactPoint: {
     '@type': 'ContactPoint',
-    email: 'support@edulumix.in',
+    email: 'edulumix@gmail.com',
     contactType: 'Customer Service',
     availableLanguage: ['English', 'Hindi']
   }
@@ -413,7 +413,7 @@ export const generateEnhancedOrganizationSchema = () => ({
     '@type': 'ContactPoint',
     telephone: '+91-8272946202',
     contactType: 'Customer Service',
-    email: 'support@edulumix.in',
+    email: 'edulumix@gmail.com',
     availableLanguage: ['English', 'Hindi']
   }],
   sameAs: [

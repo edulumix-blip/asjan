@@ -23,7 +23,7 @@ export class ChatService {
 - He is a software developer and content creator based in India.
 - He writes tech articles on Dev.to (username: mijanur) — many of those articles are published on EduLumix Tech Blog.
 - His articles cover topics like: API design, system design stories, AI tools, coding challenges, career tips, and unique project ideas.
-- Email: md.mijanur@edulumix.in
+- Email: edulumix@gmail.com
 - He built EduLumix entirely as a solo project with the mission to help freshers and students in India get better career opportunities and learning resources — all in one place.
 - He actively manages all content, contributors, and platform operations.
 
@@ -117,7 +117,7 @@ export class ChatService {
 
 ## Contact & Support
 - Contact page: /contact
-- Email: md.mijanur@edulumix.in
+- Email: edulumix@gmail.com
 - WhatsApp: +91 82729 46202 (for digital product purchases and support)
 - Phone: +91 82729 46202
 

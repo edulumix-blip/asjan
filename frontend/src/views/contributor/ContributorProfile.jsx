@@ -505,7 +505,7 @@ const ContributorProfile = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href="mailto:admin@edulumix.com"
+                    href="mailto:edulumix@gmail.com"
                     className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
                   >
                     <Mail className="w-4 h-4" />

@@ -247,9 +247,9 @@ export class MocktestsService {
       throw new NotFoundException('Mock test not found');
     }
 
-    // Increment views
+    // Increment views safely without VersionError
+    await this.mockTestModel.updateOne({ _id: test._id }, { $inc: { views: 1 } });
     test.views += 1;
-    await test.save();
 
     return {
       success: true,
@@ -355,7 +355,7 @@ export class MocktestsService {
     }
 
     test.isPublished = !test.isPublished;
-    await test.save();
+    await this.mockTestModel.updateOne({ _id: test._id }, { $set: { isPublished: test.isPublished } });
 
     return {
       success: true,
@@ -372,7 +372,7 @@ export class MocktestsService {
     }
 
     test.isFeatured = !test.isFeatured;
-    await test.save();
+    await this.mockTestModel.updateOne({ _id: test._id }, { $set: { isFeatured: test.isFeatured } });
 
     return {
       success: true,
@@ -397,11 +397,19 @@ export class MocktestsService {
 
     // Update attempts and average score
     const newAttempts = test.attempts + 1;
-    const newAvgScore = (test.avgScore * test.attempts + score) / newAttempts;
+    const newAvgScore = Math.round(((test.avgScore * test.attempts + score) / newAttempts) * 100) / 100;
 
+    await this.mockTestModel.updateOne(
+      { _id: test._id },
+      {
+        $set: {
+          attempts: newAttempts,
+          avgScore: newAvgScore,
+        },
+      },
+    );
     test.attempts = newAttempts;
-    test.avgScore = Math.round(newAvgScore * 100) / 100;
-    await test.save();
+    test.avgScore = newAvgScore;
 
     return {
       success: true,

@@ -34,6 +34,18 @@ const ClaimModal = ({ isOpen, onClose, milestone, onSubmit }) => {
 
       if (response.data.success) {
         toast.success('Claim request submitted successfully!');
+        if (typeof window !== 'undefined') {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';
+          script.onload = () => {
+            window.confetti?.({
+              particleCount: 150,
+              spread: 80,
+              origin: { y: 0.6 }
+            });
+          };
+          document.body.appendChild(script);
+        }
         onSubmit();
         onClose();
         setPaymentDetails('');

@@ -178,13 +178,13 @@ const TestimonialsCarousel = ({ testimonials }) => {
   };
 
   return (
-    <section className="py-16 lg:py-24 overflow-hidden">
+    <section className="py-6 lg:py-8 overflow-hidden">
       <div className="w-full px-8 lg:px-12">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-gray-900 dark:text-white">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold font-display mb-2 text-gray-900 dark:text-white">
             What Our <span className="text-blue-600 dark:text-blue-400">Users Say</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
             Real stories from real people who transformed their careers with EduLumix
           </p>
         </div>
@@ -488,7 +488,7 @@ const Home = () => {
       />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 lg:py-28 min-h-[520px] lg:min-h-[580px] flex items-center">
+      <section className="relative overflow-hidden py-10 lg:py-14 min-h-[360px] lg:min-h-[420px] flex items-center">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=85"
@@ -553,7 +553,7 @@ const Home = () => {
       <AdSlot slotId={AD_SLOTS.BANNER} className="py-6 w-full px-8 lg:px-12" />
 
       {/* Earn With Us Section */}
-      <section className="py-12 lg:py-16 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden">
+      <section className="py-6 lg:py-8 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
@@ -670,7 +670,7 @@ const Home = () => {
       </section>
 
       {/* Why NextKaptan Section */}
-      <section className="py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-dark-200 dark:via-dark-300 dark:to-dark-200 relative overflow-hidden">
+      <section className="py-6 lg:py-8 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-dark-200 dark:via-dark-300 dark:to-dark-200 relative overflow-hidden">
         {/* Background Decorations */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-indigo-500/5 rounded-full blur-3xl"></div>
@@ -783,7 +783,7 @@ const Home = () => {
       </section>
 
       {/* TechForDev Partner Section - Image as provided */}
-      <section className="py-16 lg:py-20 bg-gray-100 dark:bg-dark-200 relative overflow-hidden">
+      <section className="py-6 lg:py-8 bg-gray-100 dark:bg-dark-200 relative overflow-hidden">
         <div className="w-full px-8 lg:px-12 relative z-10">
           <div className="relative rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl group">
             {/* Your image - displayed as is */}
@@ -828,9 +828,9 @@ const Home = () => {
       </section>
 
       {/* Explore Our Portals Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-6 lg:py-8">
         <div className="w-full px-8 lg:px-12">
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-gray-900 dark:text-white">
               Explore Our <span className="text-blue-600 dark:text-blue-400">Portals</span>
             </h2>
@@ -883,9 +883,9 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-6 lg:py-8">
         <div className="w-full px-8 lg:px-12">
-          <div className="text-center mb-12">
+          <div className="text-center mb-5">
             <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-gray-900 dark:text-white">
               Our <span className="text-blue-600 dark:text-blue-400">Impact</span>
             </h2>
@@ -920,9 +920,9 @@ const Home = () => {
       </section>
 
       {/* Top Contributors Section */}
-      <section className="py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white dark:from-dark-200 dark:to-dark-300 overflow-hidden">
+      <section className="py-6 lg:py-8 bg-gradient-to-b from-gray-50 to-white dark:from-dark-200 dark:to-dark-300 overflow-hidden">
         <div className="w-full px-8 lg:px-12">
-          <div className="text-center mb-10">
+          <div className="text-center mb-5">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-500/20 mb-4">
               <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">OUR TEAM</span>
@@ -951,9 +951,9 @@ const Home = () => {
       <TestimonialsCarousel testimonials={testimonials} />
 
       {/* CTA Section */}
-      <section className="py-16 lg:py-24 bg-gray-50 dark:bg-dark-200">
+      <section className="py-6 lg:py-8 bg-gray-50 dark:bg-dark-200">
         <div className="w-full px-8 lg:px-12">
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-6 md:p-8 text-center text-white relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
             
             <div className="relative">

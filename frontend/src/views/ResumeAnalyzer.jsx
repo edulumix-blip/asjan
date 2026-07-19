@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   FileText, Upload, Brain, CheckCircle, AlertTriangle, 
   ArrowRight, Search, Sparkles, MapPin, Briefcase, 
@@ -12,6 +12,78 @@ import axios from 'axios';
 import Link from 'next/link';
 import SEO from '../components/seo/SEO';
 import CompanyAvatar from '../components/common/CompanyAvatar';
+
+const ScannerLoader = () => {
+  const [step, setStep] = useState(0);
+  const logs = [
+    "Reading resume structure & document encoding...",
+    "Extracting candidate contact details and qualifications...",
+    "Identifying key technical skills and expertise fields...",
+    "Querying matching job roles from local database...",
+    "Scoring resume ATS alignment with industry standards...",
+    "Almost done, parsing final report structure..."
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStep((prev) => {
+        if (prev < logs.length - 1) return prev + 1;
+        return prev;
+      });
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Card className="border border-gray-200 dark:border-dark-100 bg-white/80 dark:bg-dark-200/80 backdrop-blur-md shadow-2xl rounded-3xl overflow-hidden relative">
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes scanBeam {
+          0% { top: 0%; opacity: 0.8; }
+          50% { top: 100%; opacity: 0.8; }
+          100% { top: 0%; opacity: 0.8; }
+        }
+        .scanning-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.8), transparent);
+          box-shadow: 0 0 12px 3px rgba(59, 130, 246, 0.5);
+          animation: scanBeam 3s ease-in-out infinite;
+          z-index: 10;
+        }
+      `}} />
+      <div className="scanning-line" />
+
+      <CardContent className="p-8 text-center space-y-6">
+        <div className="relative w-20 h-20 mx-auto flex items-center justify-center bg-blue-500/10 dark:bg-blue-500/5 rounded-3xl shadow-inner">
+          <Brain className="w-10 h-10 text-blue-600 animate-pulse" />
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-extrabold text-gray-900 dark:text-white">AI ATS Scanning in Progress...</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto leading-relaxed font-medium">
+            Llama 3.1 is reading your resume structure, detecting matching keywords, and scoring profile relevance.
+          </p>
+        </div>
+
+        <div className="bg-slate-950 dark:bg-black/40 rounded-2xl p-5 text-left border border-slate-900/60 font-mono text-xs text-blue-400 space-y-2.5 shadow-inner">
+          {logs.slice(0, step + 1).map((log, i) => (
+            <div key={i} className="flex items-start gap-2.5 animate-fadeIn">
+              <span className="text-green-500 font-bold shrink-0">✓</span>
+              <p className="text-gray-300 font-medium leading-relaxed">{log}</p>
+            </div>
+          ))}
+          {step < logs.length - 1 && (
+            <div className="flex items-center gap-2.5">
+              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping shrink-0" />
+              <p className="text-blue-500 animate-pulse font-bold">Analyzing...</p>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 const ResumeAnalyzer = () => {
   const [file, setFile] = useState(null);
@@ -251,22 +323,7 @@ const ResumeAnalyzer = () => {
           {/* Right Column: Dynamic Analysis Report & Matched Jobs */}
           <div className="space-y-6">
             {/* 1. Loader State */}
-            {loading && (
-              <Card className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-dark-200 shadow-sm rounded-2xl">
-                <CardContent className="p-8 text-center space-y-4">
-                  <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-                    <div className="absolute inset-0 border-4 border-blue-100 dark:border-blue-900 rounded-full animate-pulse" />
-                    <Brain className="w-8 h-8 text-blue-600 animate-bounce" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">AI ATS Scanning in progress...</h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto leading-relaxed">
-                      Llama 3.1 is reading your resume structure, detecting matching keywords, identifying strengths, and looking up open positions...
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+            {loading && <ScannerLoader />}
 
             {/* 2. Idle / Error State */}
             {!loading && !result && (

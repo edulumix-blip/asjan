@@ -17,7 +17,8 @@ import {
   ChevronRight,
   User,
   Gift,
-  Globe
+  Globe,
+  MessageSquare
 } from 'lucide-react';
 import VerifiedBadge from '../../components/common/VerifiedBadge';
 
@@ -36,6 +37,7 @@ const SuperAdminLayout = () => {
     { path: '/super-admin/external-api', label: 'External API', icon: Globe },
     { path: '/super-admin/products', label: 'Digital Products', icon: Package },
     { path: '/super-admin/mock-tests', label: 'Mock Tests', icon: ClipboardList },
+    { path: '/super-admin/interview-prep', label: 'Interview Prep', icon: MessageSquare },
     { path: '/super-admin/claims', label: 'Claims Management', icon: Gift },
     { path: '/super-admin/profile', label: 'My Profile', icon: User },
   ];

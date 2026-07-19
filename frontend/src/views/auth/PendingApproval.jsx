@@ -51,7 +51,7 @@ const PendingApproval = () => {
             <Home className="w-5 h-5 mr-2" />
             Go Home
           </Link>
-          <a href="mailto:support@edulumix.com" className="btn-secondary">
+          <a href="mailto:edulumix@gmail.com" className="btn-secondary">
             <Mail className="w-5 h-5 mr-2" />
             Contact Support
           </a>

@@ -2,11 +2,15 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   
+  // Apply security headers
+  app.use(helmet());
+
   // Set global prefix
   app.setGlobalPrefix('api', { exclude: ['sitemap.xml'] });
 
@@ -19,10 +23,15 @@ async function bootstrap() {
   );
 
   // Enable CORS
-  const clientUrl = configService.get<string>('CLIENT_URL') || 'https://edulumix.in';
+  const rawClientUrl = configService.get<string>('CLIENT_URL') || 'https://edulumix.in';
+  const clientUrl = rawClientUrl.replace(/\/$/, '');
   const isDev = configService.get<string>('NODE_ENV') === 'development';
+  const allowedOrigins = [
+    clientUrl,
+    clientUrl.replace('https://', 'https://www.').replace('http://', 'http://www.'),
+  ];
   app.enableCors({
-    origin: isDev ? true : clientUrl,
+    origin: isDev ? true : allowedOrigins,
     credentials: true,
   });
 

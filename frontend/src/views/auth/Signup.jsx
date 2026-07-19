@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from '@/utils/reactRouterCompat';
 import Logo from '../../components/common/Logo';
-import { 
-  Button, 
-  Card, 
+import {
+  Button,
+  Card,
   CardContent,
   Checkbox,
   Select,
@@ -18,7 +18,7 @@ import {
   Label,
   InputGroup
 } from '@heroui/react';
-import { 
+import {
   User, Mail, Lock, Eye, EyeOff, UserPlus, Shield,
   Gift, Trophy, Coins, TrendingUp, Sparkles, Home, CheckCircle, Clock
 } from 'lucide-react';
@@ -30,7 +30,7 @@ import api from '../../services/api';
 // Rewards Info Component
 const RewardsSection = () => {
   const [activeReward, setActiveReward] = useState(0);
-  
+
   const rewards = [
     { points: '10', action: 'Post a Job', icon: '💼' },
     { points: '10', action: 'Share Resource', icon: '📚' },
@@ -53,14 +53,14 @@ const RewardsSection = () => {
           <Gift className="w-5 h-5 text-yellow-300" />
           <span className="text-white font-medium">Earn While You Contribute</span>
         </div>
-        
+
         <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
           Turn Your <span className="text-yellow-300">Skills</span> Into <span className="text-green-300">Rewards</span>
         </h2>
         <p className="text-blue-100 text-lg mb-10">
           Every contribution you make earns you points. Redeem them for real money!
         </p>
-        
+
         {/* Animated Points Display */}
         <div className="relative mb-10">
           <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-2xl shadow-orange-500/30 animate-pulse">
@@ -75,13 +75,13 @@ const RewardsSection = () => {
             {rewards[activeReward].icon}
           </div>
         </div>
-        
+
         {/* Current Action */}
         <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-8 border border-white/20">
           <p className="text-white font-semibold text-lg">{rewards[activeReward].action}</p>
           <p className="text-blue-200 text-sm">and earn {rewards[activeReward].points} points instantly!</p>
         </div>
-        
+
         {/* Points Value */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white/5 rounded-xl p-3 border border-white/10">
@@ -100,7 +100,7 @@ const RewardsSection = () => {
             <p className="text-blue-200 text-xs">Your Earnings</p>
           </div>
         </div>
-        
+
         {/* CTA Text */}
         <p className="text-blue-100 text-sm flex items-center justify-center gap-2">
           <Sparkles className="w-4 h-4 text-yellow-300" />
@@ -120,7 +120,7 @@ const Signup = () => {
     confirmPassword: '',
     role: 'job_poster',
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -261,7 +261,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-0 lg:min-h-[calc(100vh-4rem)] flex">
       <SEO title="Request Admin Access | EduLumix" noIndex />
       {/* Left Side - Animated Services (Hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-700 relative overflow-hidden">
@@ -272,7 +272,7 @@ const Signup = () => {
       </div>
 
       {/* Right Side - Form or Pending Approval */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gray-50 dark:bg-dark-300">
+      <div className="w-full lg:w-1/2 flex items-start justify-center pt-8 sm:pt-12 lg:pt-16 pb-8 px-6 sm:px-10 lg:px-12 bg-gray-50 dark:bg-dark-300 overflow-y-auto">
         <div className="w-full max-w-md">
           {submitted ? (
             /* Pending Approval Message */
@@ -318,7 +318,7 @@ const Signup = () => {
 
               {/* Actions */}
               <div className="flex flex-col sm:flex-row gap-2.5">
-                <Button 
+                <Button
                   onPress={() => navigate('/')}
                   variant="primary"
                   className="flex-1 h-10 bg-blue-600 text-white font-medium rounded-lg shadow-lg"
@@ -326,7 +326,7 @@ const Signup = () => {
                 >
                   Go Home
                 </Button>
-                <Button 
+                <Button
                   onPress={() => navigate('/login')}
                   variant="outline"
                   className="flex-1 h-10 font-medium rounded-lg border-gray-200 dark:border-gray-700"
@@ -352,13 +352,13 @@ const Signup = () => {
               </div>
 
               {/* Form wrapped in HeroUI Card */}
-              <Card className="border-none shadow-xl bg-white dark:bg-dark-100">
-                <CardContent className="p-4 sm:p-5">
-                  <form onSubmit={handleSubmit} className="space-y-3.5">
+              <Card className="border-none shadow-2xl bg-white dark:bg-dark-100 rounded-2xl">
+                <CardContent className="p-6 sm:p-8">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Full Name */}
-                    <TextField className="flex flex-col gap-1 text-left">
-                      <Label className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</Label>
-                      <InputGroup className="h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-3 flex items-center bg-white dark:bg-dark-100">
+                    <TextField className="flex flex-col gap-1.5 text-left">
+                      <Label className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Full Name</Label>
+                      <InputGroup className="h-12 rounded-xl border border-gray-200 dark:border-gray-700 px-4 flex items-center bg-white dark:bg-dark-100 focus-within:border-blue-500 transition-all">
                         <InputGroup.Prefix className="mr-2">
                           <User className="w-4 h-4 text-gray-400 flex-shrink-0" />
                         </InputGroup.Prefix>
@@ -375,9 +375,9 @@ const Signup = () => {
                     </TextField>
 
                     {/* Email */}
-                    <TextField className="flex flex-col gap-1 text-left">
-                      <Label className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</Label>
-                      <InputGroup className="h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-3 flex items-center bg-white dark:bg-dark-100">
+                    <TextField className="flex flex-col gap-1.5 text-left">
+                      <Label className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Email Address</Label>
+                      <InputGroup className="h-12 rounded-xl border border-gray-200 dark:border-gray-700 px-4 flex items-center bg-white dark:bg-dark-100 focus-within:border-blue-500 transition-all">
                         <InputGroup.Prefix className="mr-2">
                           <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
                         </InputGroup.Prefix>
@@ -420,14 +420,14 @@ const Signup = () => {
                               <Label className="text-[11px] font-semibold text-gray-600 dark:text-gray-400">
                                 Enter 6-Digit OTP sent to your email
                               </Label>
-                              <div className="flex gap-2 items-center flex-wrap sm:flex-nowrap">
+                              <div className="flex gap-2 items-center flex-wrap sm:flex-nowrap mt-1">
                                 <input
                                   type="text"
                                   maxLength={6}
                                   value={otpCode}
                                   onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
                                   placeholder="000000"
-                                  className="w-20 sm:w-24 h-8 rounded-md border border-gray-200 dark:border-gray-700 px-2 bg-white dark:bg-dark-200 text-xs sm:text-sm text-gray-900 dark:text-white text-center font-bold tracking-widest focus:outline-none focus:border-blue-500"
+                                  className="w-20 sm:w-24 h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-2 bg-white dark:bg-dark-200 text-xs sm:text-sm text-gray-900 dark:text-white text-center font-bold tracking-widest focus:outline-none focus:border-blue-500"
                                 />
                                 <Button
                                   type="button"
@@ -435,7 +435,7 @@ const Signup = () => {
                                   isLoading={otpLoading}
                                   disabled={otpCode.length !== 6 || otpLoading}
                                   size="sm"
-                                  className="h-8 px-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md text-xs"
+                                  className="h-10 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-xs"
                                 >
                                   Verify
                                 </Button>
@@ -465,23 +465,23 @@ const Signup = () => {
                     </TextField>
 
                     {/* Role Select */}
-                    <div className="flex flex-col gap-1 text-left">
-                      <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Select Role</span>
+                    <div className="flex flex-col gap-1.5 text-left">
+                      <span className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Select Role</span>
                       <Select
                         selectedKey={formData.role}
                         onSelectionChange={(key) => setFormData({ ...formData, role: key })}
                         className="w-full"
                         aria-label="Select Role"
                       >
-                        <SelectTrigger className="flex items-center justify-between w-full px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-dark-100 text-sm h-10 text-gray-900 dark:text-white">
+                        <SelectTrigger className="flex items-center justify-between w-full px-4 py-1.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-dark-100 text-sm h-12 text-gray-900 dark:text-white">
                           <SelectValue />
                           <SelectIndicator />
                         </SelectTrigger>
                         <SelectPopover>
                           <ListBox className="p-1 bg-white dark:bg-dark-100 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                             {roles.map((role) => (
-                              <ListBoxItem 
-                                key={role.value} 
+                              <ListBoxItem
+                                key={role.value}
                                 id={role.value}
                                 className="px-3 py-2 text-xs sm:text-sm rounded-md hover:bg-gray-100 dark:hover:bg-dark-200 cursor-pointer text-gray-900 dark:text-white"
                               >
@@ -494,9 +494,9 @@ const Signup = () => {
                     </div>
 
                     {/* Password */}
-                    <TextField className="flex flex-col gap-1 text-left">
-                      <Label className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Password</Label>
-                      <InputGroup className="h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-3 flex items-center bg-white dark:bg-dark-100">
+                    <TextField className="flex flex-col gap-1.5 text-left">
+                      <Label className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Password</Label>
+                      <InputGroup className="h-12 rounded-xl border border-gray-200 dark:border-gray-700 px-4 flex items-center bg-white dark:bg-dark-100 focus-within:border-blue-500 transition-all">
                         <InputGroup.Prefix className="mr-2">
                           <Lock className="w-4 h-4 text-gray-400 flex-shrink-0" />
                         </InputGroup.Prefix>
@@ -529,9 +529,9 @@ const Signup = () => {
                     </TextField>
 
                     {/* Confirm Password */}
-                    <TextField className="flex flex-col gap-1 text-left">
-                      <Label className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</Label>
-                      <InputGroup className="h-10 rounded-lg border border-gray-200 dark:border-gray-700 px-3 flex items-center bg-white dark:bg-dark-100">
+                    <TextField className="flex flex-col gap-1.5 text-left">
+                      <Label className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">Confirm Password</Label>
+                      <InputGroup className="h-12 rounded-xl border border-gray-200 dark:border-gray-700 px-4 flex items-center bg-white dark:bg-dark-100 focus-within:border-blue-500 transition-all">
                         <InputGroup.Prefix className="mr-2">
                           <Lock className="w-4 h-4 text-gray-400 flex-shrink-0" />
                         </InputGroup.Prefix>
@@ -560,13 +560,13 @@ const Signup = () => {
                     </TextField>
 
                     {/* Terms & Conditions Checkbox */}
-                    <div className="flex items-start gap-2 px-1">
+                    <div className="flex items-start gap-3 px-1 mt-1">
                       <input
                         type="checkbox"
                         id="acceptTerms"
                         checked={acceptTerms}
                         onChange={(e) => setAcceptTerms(e.target.checked)}
-                        className="w-3.5 h-3.5 text-blue-600 border-gray-200 dark:border-gray-700 rounded focus:ring-blue-500 cursor-pointer mt-0.5"
+                        className="w-4 h-4 text-blue-600 border-gray-200 dark:border-gray-700 rounded focus:ring-blue-500 cursor-pointer mt-0.5"
                       />
                       <label htmlFor="acceptTerms" className="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 select-none cursor-pointer">
                         I agree to the{' '}
@@ -586,7 +586,7 @@ const Signup = () => {
                       variant="primary"
                       isLoading={loading}
                       disabled={!isEmailVerified}
-                      className="w-full h-10 text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed rounded-lg transition-all shadow-lg shadow-blue-500/25 mt-1"
+                      className="w-full h-12 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed rounded-xl transition-all shadow-lg shadow-blue-500/25 mt-2"
                       startContent={!loading && <UserPlus className="w-4 h-4" />}
                     >
                       {loading ? 'Submitting...' : 'Submit Request'}

@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,6 +21,7 @@ import { StatsModule } from './stats/stats.module';
 import { TaskTrackerModule } from './utils/task-tracker.module';
 import { SyncLogsModule } from './sync-logs/sync-logs.module';
 import { ResumeAnalyzerModule } from './resume-analyzer/resume-analyzer.module';
+import { InterviewPrepModule } from './interview-prep/interview-prep.module';
 
 import { Blog, BlogSchema } from './blogs/schemas/blog.schema';
 import { Job, JobSchema } from './jobs/schemas/job.schema';
@@ -30,6 +32,7 @@ import {
   DigitalProduct,
   DigitalProductSchema,
 } from './products/schemas/product.schema';
+import { InterviewPrep, InterviewPrepSchema } from './interview-prep/schemas/interview-prep.schema';
 
 @Module({
   imports: [
@@ -59,6 +62,7 @@ import {
       { name: Course.name, schema: CourseSchema },
       { name: MockTest.name, schema: MockTestSchema },
       { name: DigitalProduct.name, schema: DigitalProductSchema },
+      { name: InterviewPrep.name, schema: InterviewPrepSchema },
     ]),
     UsersModule,
     AuthModule,
@@ -74,8 +78,15 @@ import {
     TaskTrackerModule,
     SyncLogsModule,
     ResumeAnalyzerModule,
+    InterviewPrepModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

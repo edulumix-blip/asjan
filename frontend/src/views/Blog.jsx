@@ -234,7 +234,10 @@ const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-300">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50 dark:from-dark-300 dark:via-dark-250 dark:to-dark-300 relative overflow-hidden">
+      {/* Decorative background glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none"></div>
       <SEO
         title="Tech Blog - Programming Tutorials, Career Tips & Technology Guides | EduLumix"
         description="Read latest tech blogs, programming tutorials, interview tips, career guidance, web development guides, and technology trends. Learn from industry experts and enhance your technical skills."
@@ -347,10 +350,10 @@ const Blog = () => {
                 role="tab"
                 aria-selected={selectedCategory === category}
                 onClick={() => selectCategory(category)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all active:scale-[0.97] ${
                   selectedCategory === category
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
-                    : 'bg-white dark:bg-dark-200 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                    : 'bg-white/75 dark:bg-dark-200/75 text-gray-600 dark:text-gray-400 border border-gray-200/60 dark:border-gray-800 hover:border-blue-400/50 dark:hover:border-blue-500/50'
                 }`}
               >
                 {category === 'All' && <LayoutGrid className="w-3.5 h-3.5 opacity-80" />}
@@ -396,7 +399,7 @@ const Blog = () => {
               </div>
             ) : (
               displayedBlogs.map((blog) => (
-                <article key={blog._id} className="bg-white dark:bg-dark-200 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+                <article key={blog._id} className="bg-white/80 dark:bg-dark-200/80 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-850 overflow-hidden hover:shadow-2xl hover:shadow-blue-500/5 dark:hover:shadow-none hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300">
                   {/* Post Header */}
                   <div className="p-4 flex items-start">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -519,7 +522,7 @@ const Blog = () => {
                   )}
 
                   {/* Stats Bar */}
-                  <div className="px-4 py-3 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800">
+                  <div className="px-4 py-3 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 border-t border-gray-150 dark:border-gray-850">
                     <div className="flex items-center gap-1">
                       <div className="flex -space-x-1">
                         <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
@@ -544,7 +547,7 @@ const Blog = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="px-2 py-1 border-t border-gray-100 dark:border-gray-800 flex items-center">
+                  <div className="px-2 py-1 border-t border-gray-150 dark:border-gray-850 flex items-center">
                     <button 
                       onClick={() => handleLike(blog._id)}
                       className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg font-medium transition-colors ${
@@ -599,8 +602,8 @@ const Blog = () => {
           {/* Desktop only: sticky top 20 trending */}
           <aside className="hidden lg:block w-80 flex-shrink-0" aria-label="Trending blog posts">
             <div className="sticky top-28 space-y-4">
-              <div className="bg-white dark:bg-dark-200 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-gray-50/80 dark:bg-dark-100/80">
+              <div className="bg-white/80 dark:bg-dark-200/80 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-850 shadow-sm overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3.5 border-b border-gray-150 dark:border-gray-850 bg-gray-50/50 dark:bg-dark-100/50">
                   <TrendingUp className="w-5 h-5 text-orange-500" aria-hidden />
                   <h3 className="font-bold text-gray-900 dark:text-white">Top 20 trending</h3>
                 </div>

@@ -14,7 +14,8 @@ import {
   Plus,
   Check,
   Trash2,
-  Loader2
+  Loader2,
+  MessageSquare
 } from 'lucide-react';
 import { Card, CardContent, Button } from '@heroui/react';
 import api from '../../services/api';
@@ -28,6 +29,7 @@ const SuperAdminDashboard = () => {
     totalCourses: 0,
     totalProducts: 0,
     totalMockTests: 0,
+    totalInterviewPreps: 0,
     pendingUsers: 0,
     approvedUsers: 0,
     blockedUsers: 0,
@@ -70,7 +72,7 @@ const SuperAdminDashboard = () => {
         }
       };
 
-      const [userStats, jobsRes, resourcesRes, blogsRes, coursesRes, productsRes, mockTestsRes] = await Promise.all([
+      const [userStats, jobsRes, resourcesRes, blogsRes, coursesRes, productsRes, mockTestsRes, interviewPrepRes] = await Promise.all([
         handleGet('/users/stats'),
         handleGet('/jobs?limit=1'),
         handleGet('/resources?limit=1'),
@@ -78,6 +80,7 @@ const SuperAdminDashboard = () => {
         handleGet('/courses?limit=1'),
         handleGet('/products?limit=1'),
         handleGet('/mocktests?limit=1'),
+        handleGet('/interview-prep'),
       ]);
 
       setStats({
@@ -88,6 +91,7 @@ const SuperAdminDashboard = () => {
         totalCourses: coursesRes.data?.total || 0,
         totalProducts: productsRes.data?.total || 0,
         totalMockTests: mockTestsRes.data?.total || 0,
+        totalInterviewPreps: interviewPrepRes.data?.data?.length || 0,
         pendingUsers: userStats.data?.data?.pendingUsers || 0,
         approvedUsers: userStats.data?.data?.approvedUsers || 0,
         blockedUsers: userStats.data?.data?.blockedUsers || 0,
@@ -148,6 +152,13 @@ const SuperAdminDashboard = () => {
       icon: ClipboardList, 
       color: 'blue',
       gradient: 'from-blue-700 to-blue-800'
+    },
+    { 
+      label: 'Interview Prep Qs', 
+      value: stats.totalInterviewPreps, 
+      icon: MessageSquare, 
+      color: 'indigo',
+      gradient: 'from-indigo-500 to-indigo-600'
     },
   ];
 

@@ -134,5 +134,7 @@ JobSchema.pre('save', function (this: any) {
 JobSchema.index({ title: 'text', company: 'text', description: 'text' });
 JobSchema.index({ postedBy: 1, createdAt: -1 });
 JobSchema.index({ category: 1, status: 1, isDeleted: 1 });
+JobSchema.index({ status: 1, isDeleted: 1, createdAt: -1 });
 JobSchema.index({ source: 1, externalId: 1 }, { sparse: true });
 JobSchema.index({ source: 1, status: 1, lastSeenAt: 1, isDeleted: 1 });
+JobSchema.index({ status: 1, isDeleted: 1, category: 1, city: 1, location: 1, experience: 1 });

@@ -83,23 +83,7 @@ export class ClaimsService {
       );
     }
 
-    const user = await this.userModel.findById(userId).exec();
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    if (user.claimedMilestones && user.claimedMilestones.includes(points)) {
-      throw new BadRequestException(
-        `You have already claimed the ${points} points milestone. Each milestone can only be claimed once.`,
-      );
-    }
-
-    if (user.points < points) {
-      throw new BadRequestException(
-        `Insufficient points. You have ${user.points} points but need ${points} points.`,
-      );
-    }
-
+    // Check for existing pending claims first
     const pendingClaim = await this.claimModel
       .findOne({
         user: new Types.ObjectId(userId),
@@ -113,25 +97,49 @@ export class ClaimsService {
       );
     }
 
-    // Create claim
-    const claim = await this.claimModel.create({
-      user: new Types.ObjectId(userId),
-      points,
-      amount: this.VALID_MILESTONES[points],
-      paymentMethod,
-      paymentDetails,
-    });
+    // Atomically decrement points and push milestone to prevent double-submit race conditions
+    const updatedUser = await this.userModel
+      .findOneAndUpdate(
+        {
+          _id: new Types.ObjectId(userId),
+          points: { $gte: points },
+          claimedMilestones: { $ne: points },
+        },
+        {
+          $inc: { points: -points },
+          $push: { claimedMilestones: points },
+        },
+        { new: true },
+      )
+      .exec();
 
-    // Deduct points and mark milestone
+    if (!updatedUser) {
+      throw new BadRequestException(
+        'Insufficient points or milestone already claimed.',
+      );
+    }
+
+    // Create claim document
+    let claim: ClaimDocument;
     try {
-      user.points -= points;
-      if (!user.claimedMilestones) {
-        user.claimedMilestones = [];
-      }
-      user.claimedMilestones.push(points);
-      await user.save();
+      claim = await this.claimModel.create({
+        user: new Types.ObjectId(userId),
+        points,
+        amount: this.VALID_MILESTONES[points],
+        paymentMethod,
+        paymentDetails,
+      });
     } catch (saveError) {
-      await this.claimModel.findByIdAndDelete(claim._id).exec();
+      // Rollback the atomic points deduction if writing the claim fails
+      await this.userModel
+        .updateOne(
+          { _id: new Types.ObjectId(userId) },
+          {
+            $inc: { points: points },
+            $pull: { claimedMilestones: points },
+          },
+        )
+        .exec();
       throw saveError;
     }
 
@@ -141,10 +149,10 @@ export class ClaimsService {
       .exec();
 
     // Send claim submitted email
-    if (user && user.email) {
+    if (updatedUser && updatedUser.email) {
       await this.mailerService.sendClaimSubmittedEmail(
-        user.email,
-        user.name,
+        updatedUser.email,
+        updatedUser.name,
         claim.points,
         claim.amount,
         claim.paymentMethod,
@@ -271,6 +279,17 @@ export class ClaimsService {
           populatedClaim.points,
           populatedClaim.amount,
           populatedClaim.transactionId,
+        );
+      }
+
+      // Send claim rejected email if status is transitioned to rejected
+      if (previousStatus !== 'rejected' && nextStatus === 'rejected' && populatedClaim && populatedClaim.user) {
+        await this.mailerService.sendClaimRejectedEmail(
+          (populatedClaim.user as any).email,
+          (populatedClaim.user as any).name,
+          populatedClaim.points,
+          populatedClaim.amount,
+          populatedClaim.notes || 'Not specified',
         );
       }
 

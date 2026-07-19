@@ -126,8 +126,8 @@ const PrivacyPolicy = () => {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Contact Us</h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               If you have any questions about this Privacy Policy or our data practices, please contact us at{' '}
-              <a href="mailto:privacy@edulumix.com" className="text-blue-600 dark:text-blue-400 hover:underline">
-                privacy@edulumix.com
+              <a href="mailto:edulumix@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                edulumix@gmail.com
               </a>
             </p>
           </div>

@@ -18,7 +18,7 @@ import {
 import { 
   Menu, X, User, LogOut, LayoutDashboard, 
   Briefcase, FolderOpen, ShoppingBag, ChevronDown,
-  Sun, Moon, BookOpen, GraduationCap, FileText, ClipboardList, Sparkles
+  Sun, Moon, BookOpen, GraduationCap, FileText, ClipboardList, Sparkles, MessageSquare
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -38,12 +38,12 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Fresher Job', path: '/jobs', icon: Briefcase },
-    { name: 'Free Resources', path: '/resources', icon: FolderOpen },
-    { name: 'Courses', path: '/courses', icon: GraduationCap },
-    { name: 'Tech Blog', path: '/blog', icon: FileText },
-    { name: 'Digital Product', path: '/digital-products', icon: ShoppingBag },
-    { name: 'Mock Test', path: '/mock-test', icon: ClipboardList },
+    { name: 'Jobs', path: '/jobs', icon: Briefcase },
+    { name: 'Resources', path: '/resources', icon: FolderOpen },
+    { name: 'Free Courses', path: '/courses', icon: GraduationCap },
+    { name: 'Blog', path: '/blog', icon: FileText },
+    { name: 'Mock Tests', path: '/mock-test', icon: ClipboardList },
+    { name: 'Interview Prep', path: '/interview-prep', icon: MessageSquare },
     { name: 'AI Resume Analyzer', path: '/resume-analyzer', icon: Sparkles },
   ];
 
@@ -113,7 +113,7 @@ const Navbar = () => {
                     <ChevronDown className="w-4 h-4 text-gray-400" />
                   </div>
                 </DropdownTrigger>
-                <DropdownPopover placement="bottom end" className="p-1 bg-white dark:bg-dark-100 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg min-w-[200px]">
+                <DropdownPopover placement="bottom end" className="p-1 bg-white/95 dark:bg-dark-100/95 backdrop-blur-md border border-gray-200/50 dark:border-dark-700/50 rounded-xl shadow-lg min-w-[200px]">
                   <DropdownMenu aria-label="User actions">
                     <DropdownItem key="profile_header" className="h-14 gap-2" textValue="Signed in email">
                       <p className="text-xs text-gray-500">Signed in as</p>
@@ -158,14 +158,14 @@ const Navbar = () => {
                 <Button 
                   onPress={() => router.push('/login')}
                   variant="ghost"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                  className="text-sm font-bold text-gray-700 dark:text-gray-300 active:scale-[0.98] transition-transform rounded-xl"
                 >
                   Sign In
                 </Button>
                 <Button 
                   onPress={() => router.push('/signup')}
                   variant="primary"
-                  className="text-sm font-medium text-white shadow-lg shadow-blue-500/25 bg-blue-600 hover:bg-blue-700"
+                  className="text-sm font-bold text-white shadow-lg shadow-blue-500/25 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] transition-transform rounded-xl"
                 >
                   Sign Up
                 </Button>
@@ -201,7 +201,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden border-t border-gray-200 dark:border-gray-800 animate-slide-down bg-white dark:bg-dark-300">
+        <div className="lg:hidden border-t border-gray-200/50 dark:border-gray-800/50 animate-slide-down bg-white/95 dark:bg-dark-300/95 backdrop-blur-xl">
           <div className="px-4 py-4 space-y-2">
             {navLinks.map((link) => {
               const isActive = pathname === link.path || (link.path !== '/' && pathname?.startsWith(link.path));

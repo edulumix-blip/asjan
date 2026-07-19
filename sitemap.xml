@@ -36,6 +36,16 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://edulumix.in/interview-prep</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://edulumix.in/resume-analyzer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://edulumix.in/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

@@ -108,3 +108,12 @@ export const userService = {
   changeRole: (id: string, role: string) => api.put(`/users/${id}/role`, { role }),
   delete: (id: string) => api.delete(`/users/${id}`),
 };
+
+// Interview Prep
+export const interviewPrepService = {
+  getAll: (params?: any) => api.get('/interview-prep', { params }),
+  getById: (id: string) => api.get(`/interview-prep/${id}`),
+  create: (data: any) => api.post('/interview-prep', data),
+  update: (id: string, data: any) => api.put(`/interview-prep/${id}`, data),
+  delete: (id: string) => api.delete(`/interview-prep/${id}`),
+};

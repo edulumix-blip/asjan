@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Link } from '@/utils/reactRouterCompat';
 import { 
-  Search, ShoppingBag, Star, Loader2, Zap, Filter,
+  Search, ShoppingBag, Star, Loader2, Zap, Filter, AlertTriangle,
 } from 'lucide-react';
 import { Card, CardContent, Button } from '@heroui/react';
 import { productService } from '../services/dataService';
@@ -252,7 +252,22 @@ const DigitalProducts = () => {
           statLoading={loading && products.length === 0}
         />
 
-      <div className="w-full px-8 lg:px-12 py-8 lg:py-12">
+      <div className="w-full px-8 lg:px-12 pb-8 lg:pb-12 pt-0 lg:pt-0">
+        {/* Caution Banner */}
+        <div className="mb-8 p-4 sm:p-5 rounded-3xl border border-amber-200/50 dark:border-amber-950/30 bg-amber-50/20 dark:bg-amber-950/10 backdrop-blur-md flex items-start gap-4">
+          <div className="p-2 bg-amber-100 dark:bg-amber-950/40 rounded-xl text-amber-600 dark:text-amber-400 shrink-0">
+            <AlertTriangle className="w-5 h-5" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="font-bold text-amber-800 dark:text-amber-400 text-sm sm:text-base">
+              Important Disclaimer & Verification Notice
+            </h4>
+            <p className="text-xs sm:text-sm text-amber-700/80 dark:text-amber-400/70 leading-relaxed font-medium">
+              Please note that several listings are created for demonstration or submission purposes and might contain outdated prices or unverified seller details. EduLumix does not guarantee the accuracy of pricing. Kindly verify details directly with the respective providers before purchasing.
+            </p>
+          </div>
+        </div>
+
         <CategoryExplorer
           id="digital-product-categories-heading"
           title="Shop by category"

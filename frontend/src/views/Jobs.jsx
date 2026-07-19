@@ -305,53 +305,53 @@ const Jobs = () => {
       />
       
       {/* Hero + live stats */}
-        <section className="relative min-h-[320px] sm:min-h-[380px] overflow-hidden mb-10">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=2000&q=85"
-              alt=""
-              className="h-full w-full object-cover object-[center_30%] sm:object-right"
-              loading="eager"
-              decoding="async"
-            />
-            {/* Dark scrim only on the text (left) side; right stays vivid */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  'linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 28%, rgba(0,0,0,0.38) 48%, rgba(0,0,0,0.08) 68%, transparent 82%)',
-              }}
-              aria-hidden
-            />
-          </div>
-          <div className="relative z-10 px-6 py-10 sm:px-10 sm:py-14 lg:py-16">
-            <div className="max-w-3xl">
-              <p className="inline-flex items-center gap-2 text-white/95 text-sm font-medium mb-4 drop-shadow-md [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
-                <Zap className="w-4 h-4 text-amber-300 shrink-0 drop-shadow-md" />
-                Freshers or experienced — your next move starts here
-              </p>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display tracking-tight mb-4 drop-shadow-md [text-shadow:0_2px_24px_rgba(0,0,0,0.55)]">
-                Land the role that fits your story
-              </h1>
-              <p className="text-white/95 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl [text-shadow:0_1px_16px_rgba(0,0,0,0.45)]">
-                From first job to your next big leap — explore IT, government, internships, remote roles and more. Smart categories, zero clutter — find what fits you and apply with confidence.
-              </p>
-              <div className="flex flex-wrap gap-3 sm:gap-4">
-                <div className="flex items-center gap-3 rounded-2xl bg-black/35 backdrop-blur-md border border-white/20 px-5 py-4 min-w-[200px] shadow-lg shadow-black/30">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15">
-                    <Briefcase className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/80 uppercase tracking-wide font-medium">Total jobs</p>
-                    <p className="text-3xl font-bold text-white tabular-nums">
-                      {statsLoading ? '—' : (stats?.total ?? 0).toLocaleString('en-IN')}
-                    </p>
-                  </div>
+      <section className="relative min-h-[320px] sm:min-h-[380px] overflow-hidden mb-10">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=2000&q=85"
+            alt=""
+            className="h-full w-full object-cover object-[center_30%] sm:object-right"
+            loading="eager"
+            decoding="async"
+          />
+          {/* Dark scrim only on the text (left) side; right stays vivid */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 28%, rgba(0,0,0,0.38) 48%, rgba(0,0,0,0.08) 68%, transparent 82%)',
+            }}
+            aria-hidden
+          />
+        </div>
+        <div className="relative z-10 px-6 py-10 sm:px-10 sm:py-14 lg:py-16">
+          <div className="max-w-3xl">
+            <p className="inline-flex items-center gap-2 text-white/95 text-sm font-medium mb-4 drop-shadow-md [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
+              <Zap className="w-4 h-4 text-amber-300 shrink-0 drop-shadow-md" />
+              Freshers or experienced — your next move starts here
+            </p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display tracking-tight mb-4 drop-shadow-md [text-shadow:0_2px_24px_rgba(0,0,0,0.55)]">
+              Land the role that fits your story
+            </h1>
+            <p className="text-white/95 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl [text-shadow:0_1px_16px_rgba(0,0,0,0.45)]">
+              From first job to your next big leap — explore IT, government, internships, remote roles and more. Smart categories, zero clutter — find what fits you and apply with confidence.
+            </p>
+            <div className="flex flex-wrap gap-3 sm:gap-4">
+              <div className="flex items-center gap-3 rounded-2xl bg-black/35 backdrop-blur-md border border-white/20 px-5 py-4 min-w-[200px] shadow-lg shadow-black/30">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15">
+                  <Briefcase className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs text-white/80 uppercase tracking-wide font-medium">Total jobs</p>
+                  <p className="text-3xl font-bold text-white tabular-nums">
+                    {statsLoading ? '—' : (stats?.total ?? 0).toLocaleString('en-IN')}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       <div className="w-full px-8 lg:px-12 py-8 lg:py-12">
         {/* Category explorer */}
@@ -383,10 +383,10 @@ const Jobs = () => {
                   key={cat.key}
                   type="button"
                   onClick={() => selectCategory(cat.key)}
-                  className={`group relative text-left overflow-hidden rounded-2xl border transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-dark-300 ${
+                  className={`group relative text-left overflow-hidden rounded-2xl border transition-all duration-300 active:scale-[0.98] focus:outline-none ${
                     active
-                      ? 'border-blue-500 ring-2 ring-blue-500/40 shadow-lg shadow-blue-500/15'
-                      : 'border-gray-200 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md'
+                      ? 'border-blue-500 bg-blue-500/5 dark:bg-blue-500/5 ring-2 ring-blue-500/30 shadow-lg shadow-blue-500/10'
+                      : 'border-gray-200 dark:border-gray-850 bg-white/60 dark:bg-dark-100/60 backdrop-blur-sm hover:border-blue-400/50 dark:hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/5 dark:hover:shadow-none'
                   }`}
                 >
                   <div className="relative h-24 sm:h-28 overflow-hidden bg-gray-100 dark:bg-dark-100">
@@ -543,10 +543,10 @@ const Jobs = () => {
                 <div
                   key={job._id}
                   onClick={() => window.location.href = jobPath}
-                  className="bg-white dark:bg-dark-200 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 cursor-pointer group"
+                  className="bg-white/80 dark:bg-dark-200/80 backdrop-blur-md rounded-3xl border border-gray-200/60 dark:border-gray-850 overflow-hidden hover:shadow-2xl hover:shadow-blue-500/5 dark:hover:shadow-none hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 cursor-pointer group flex flex-col justify-between"
                 >
                   <div className="p-5">
-                    <div className="flex items-start gap-4 mb-4">
+                    <div className="flex items-start gap-4 mb-3">
                       <CompanyAvatar
                         company={job.company}
                         logoUrl={job.companyLogo}
@@ -564,47 +564,52 @@ const Jobs = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                        <span className="truncate">{job.location}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                          <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                          <span>{job.experience}</span>
+                    <div className="space-y-2">
+                      {/* Row 1: Location & Category */}
+                      <div className="flex items-center justify-between gap-3 text-sm">
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 min-w-0">
+                          <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          <span className="truncate font-semibold">{job.location}</span>
                         </div>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold flex-shrink-0 tracking-wider uppercase ${getCategoryColor(job.category)}`}>
+                          <Tag className="w-3 h-3" />
+                          {job.category}
+                        </span>
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(job.category)}`}>
-                        <Tag className="w-3 h-3" />
-                        {job.category}
-                      </span>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        job.status === 'Closed'
-                          ? 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300'
-                          : 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300'
-                      }`}>
-                        {job.status === 'Closed' ? 'Closed' : 'Open'}
-                      </span>
+                      {/* Row 2: Experience & Status */}
+                      <div className="flex items-center justify-between gap-3 text-sm">
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 min-w-0">
+                          <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          <span className="truncate font-semibold">{job.experience}</span>
+                        </div>
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold flex-shrink-0 tracking-wider uppercase ${
+                          job.status === 'Closed'
+                            ? 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-200/30'
+                            : 'bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-200/30'
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                            job.status === 'Closed' ? 'bg-red-500' : 'bg-green-500 animate-pulse'
+                          }`} />
+                          {job.status === 'Closed' ? 'Closed' : 'Open'}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="px-5 py-3 bg-gray-50 dark:bg-dark-100 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+                  <div className="px-5 py-4 bg-gray-50/40 dark:bg-dark-100/40 backdrop-blur-sm border-t border-gray-200/50 dark:border-gray-850 flex items-center justify-between mt-auto">
                     <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1.5">
                         <Eye className="w-4 h-4" />
                         {job.views || 0}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1.5">
                         <Heart className="w-4 h-4" />
                         {job.likesCount || 0}
                       </span>
                     </div>
-                    <span className="text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:translate-x-1 transition-transform">
-                      View Details →
+                    <span className="text-blue-600 dark:text-blue-400 font-bold text-sm group-hover:translate-x-1.5 transition-transform flex items-center gap-1">
+                      View Details <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>
                 </div>

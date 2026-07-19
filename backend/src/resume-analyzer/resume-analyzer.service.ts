@@ -169,7 +169,13 @@ Return only the raw JSON. Do not include markdown codeblocks like \`\`\`json or 
       };
 
       if (keywordsForSearch && keywordsForSearch.length > 0) {
-        const regexes = keywordsForSearch.map((kw: string) => new RegExp(kw.trim(), 'i'));
+        const regexes = keywordsForSearch.map(
+          (kw: string) =>
+            new RegExp(
+              String(kw.trim()).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+              'i',
+            ),
+        );
         jobQuery.$or = [
           { category: suggestedCategory },
           { title: { $in: regexes } },

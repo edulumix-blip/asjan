@@ -1,92 +1,78 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class MailerService {
-  private transporter: nodemailer.Transporter;
+  private transporter = {
+    sendMail: (mailOptions: any, callback?: any) => this.sendMail(mailOptions, callback),
+  } as any;
 
-  constructor(private readonly configService: ConfigService) {
-    this.transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: this.configService.get<string>('SMTP_USER') || 'edulumix@gmail.com',
-        pass: this.configService.get<string>('SMTP_PASS') || 'dngk mquc oxsz orws',
-      },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
-    });
+  constructor(private readonly configService: ConfigService) {}
 
-    // Intercept sendMail to bypass SMTP port blocks on Render/Vercel using HTTP APIs
-    const originalSendMail = this.transporter.sendMail.bind(this.transporter);
-    this.transporter.sendMail = (async (mailOptions: any, callback?: any) => {
-      const provider = this.configService.get<string>('EMAIL_PROVIDER') || 'smtp';
-      const senderEmail = this.configService.get<string>('SENDER_EMAIL') || this.configService.get<string>('SMTP_USER') || 'noreply@edulumix.in';
-      const senderName = this.configService.get<string>('SENDER_NAME') || 'EduLumix';
-      const to = typeof mailOptions.to === 'string' ? mailOptions.to : Array.isArray(mailOptions.to) ? mailOptions.to.join(',') : '';
+  private async sendMail(mailOptions: any, callback?: any): Promise<any> {
+    const provider = this.configService.get<string>('EMAIL_PROVIDER') || 'brevo';
+    const senderEmail = this.configService.get<string>('SENDER_EMAIL') || this.configService.get<string>('SMTP_USER') || 'edulumix@gmail.com';
+    const senderName = this.configService.get<string>('SENDER_NAME') || 'EduLumix';
+    const to = typeof mailOptions.to === 'string' ? mailOptions.to : Array.isArray(mailOptions.to) ? mailOptions.to.join(',') : '';
 
-      if (provider === 'brevo') {
-        const apiKey = this.configService.get<string>('BREVO_API_KEY');
-        if (!apiKey) {
-          throw new Error('BREVO_API_KEY is not defined in environment variables');
-        }
-
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'accept': 'application/json',
-            'api-key': apiKey,
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            sender: { name: senderName, email: senderEmail },
-            to: [{ email: to }],
-            subject: mailOptions.subject,
-            htmlContent: mailOptions.html,
-          }),
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Brevo API returned error status ${response.status}: ${errorText}`);
-        }
-        if (callback) callback(null, { messageId: 'brevo-success' });
-        return { messageId: 'brevo-success' };
+    if (provider === 'brevo') {
+      const apiKey = this.configService.get<string>('BREVO_API_KEY');
+      if (!apiKey) {
+        throw new Error('BREVO_API_KEY is not defined in environment variables');
       }
 
-      if (provider === 'resend') {
-        const apiKey = this.configService.get<string>('RESEND_API_KEY');
-        if (!apiKey) {
-          throw new Error('RESEND_API_KEY is not defined in environment variables');
-        }
+      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': apiKey,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          sender: { name: senderName, email: senderEmail },
+          to: [{ email: to }],
+          subject: mailOptions.subject,
+          htmlContent: mailOptions.html,
+        }),
+      });
 
-        const response = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: `${senderName} <${senderEmail}>`,
-            to: to,
-            subject: mailOptions.subject,
-            html: mailOptions.html,
-          }),
-        });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Brevo API returned error status ${response.status}: ${errorText}`);
+      }
+      if (callback) callback(null, { messageId: 'brevo-success' });
+      return { messageId: 'brevo-success' };
+    }
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Resend API returned error status ${response.status}: ${errorText}`);
-        }
-        if (callback) callback(null, { messageId: 'resend-success' });
-        return { messageId: 'resend-success' };
+    if (provider === 'resend') {
+      const apiKey = this.configService.get<string>('RESEND_API_KEY');
+      if (!apiKey) {
+        throw new Error('RESEND_API_KEY is not defined in environment variables');
       }
 
-      // Default SMTP
-      mailOptions.from = `"${senderName}" <${senderEmail}>`;
-      return originalSendMail(mailOptions, callback);
-    }) as any;
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: `${senderName} <${senderEmail}>`,
+          to: to,
+          subject: mailOptions.subject,
+          html: mailOptions.html,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Resend API returned error status ${response.status}: ${errorText}`);
+      }
+      if (callback) callback(null, { messageId: 'resend-success' });
+      return { messageId: 'resend-success' };
+    }
+
+    throw new Error(`Unsupported email provider: ${provider}`);
   }
 
   private getRoleLabel(role: string): string {
@@ -137,7 +123,7 @@ export class MailerService {
         <!-- Footer -->
         <div style="padding: 24px; background-color: #f1f5f9; border-top: 1px solid #e2e8f0; text-align: center;">
           <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0; line-height: 1.5;">
-            Thank you for being part of our contributor network. If you have any questions, reach out to us at <a href="mailto:support@edulumix.in" style="color: #2563eb; text-decoration: none; font-weight: 500;">support@edulumix.in</a>.
+            Thank you for being part of our contributor network. If you have any questions, reach out to us at <a href="mailto:edulumix@gmail.com" style="color: #2563eb; text-decoration: none; font-weight: 500;">edulumix@gmail.com</a>.
           </p>
           <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 16px 0;" />
           <p style="color: #94a3b8; font-size: 11px; margin: 0;">
@@ -234,12 +220,37 @@ export class MailerService {
     }
   }
 
+  async sendAccountRejectedEmail(email: string, name: string, reason: string): Promise<void> {
+    const htmlContent = `
+      <p style="margin: 0 0 16px 0;">Hi <strong>${name}</strong>,</p>
+      <p style="margin: 0 0 16px 0;">Thank you for your interest in becoming a contributor at EduLumix.</p>
+      <p style="margin: 0 0 16px 0;">We regret to inform you that your application has been declined for the following reason:</p>
+      <div style="padding: 16px; background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 12px; color: #b91c1c; font-weight: 500; margin-bottom: 16px;">
+        ❌ ${reason || 'Your application does not meet our current contributor guidelines.'}
+      </div>
+      <p style="margin: 0;">If you have any questions or would like to provide more details, feel free to contact us at <a href="mailto:edulumix@gmail.com" style="color: #2563eb; text-decoration: none;">edulumix@gmail.com</a>.</p>
+    `;
+
+    const mailOptions = {
+      from: `"EduLumix" <${this.configService.get<string>('SMTP_USER') || 'edulumix@gmail.com'}>`,
+      to: email,
+      subject: 'Update on your EduLumix Contributor Application',
+      html: this.getBaseTemplate('Application Update', 'Declined', '#fee2e2', '#b91c1c', htmlContent),
+    };
+
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error('Error sending account rejected email:', error);
+    }
+  }
+
   async sendAccountBlockedEmail(email: string, name: string): Promise<void> {
     const htmlContent = `
       <p style="margin: 0 0 16px 0;">Hi <strong>${name}</strong>,</p>
       <p style="margin: 0 0 16px 0;">This email is to notify you that your contributor account at EduLumix has been blocked by the administration.</p>
       <p style="margin: 0 0 16px 0; color: #991b1b; font-weight: 500;">During this period, you will not be able to log in, make new posts, or claim reward payouts.</p>
-      <p style="margin: 0;">If you believe this action was taken in error or want to resolve this issue, please reply directly to this email or contact support at <a href="mailto:support@edulumix.in" style="color: #2563eb; text-decoration: none;">support@edulumix.in</a>.</p>
+      <p style="margin: 0;">If you believe this action was taken in error or want to resolve this issue, please reply directly to this email or contact support at <a href="mailto:edulumix@gmail.com" style="color: #2563eb; text-decoration: none;">edulumix@gmail.com</a>.</p>
     `;
 
     const mailOptions = {
@@ -363,6 +374,45 @@ export class MailerService {
       await this.transporter.sendMail(mailOptions);
     } catch (error) {
       console.error('Error sending payment released email:', error);
+    }
+  }
+
+  async sendClaimRejectedEmail(email: string, name: string, points: number, amount: number, reason: string): Promise<void> {
+    const htmlContent = `
+      <p style="margin: 0 0 16px 0;">Hi <strong>${name}</strong>,</p>
+      <p style="margin: 0 0 16px 0;">Your reward redemption claim for <strong>${points} points</strong> (valued at <strong>₹${amount}</strong>) has been reviewed and declined.</p>
+      <div style="padding: 20px; background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 12px; margin-bottom: 16px;">
+        <h3 style="margin: 0 0 12px 0; font-size: 15px; color: #991b1b; font-weight: 700; border-bottom: 1px solid #fee2e2; padding-bottom: 8px;">Claim Rejection Details</h3>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <tr>
+            <td style="padding: 6px 0; color: #7f1d1d; font-weight: 500;">Milestone Claimed:</td>
+            <td style="padding: 6px 0; color: #991b1b; font-weight: 600; text-align: right;">${points} Points</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 0; color: #7f1d1d; font-weight: 500;">Value:</td>
+            <td style="padding: 6px 0; color: #991b1b; font-weight: 700; text-align: right;">₹${amount}</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 0; color: #7f1d1d; font-weight: 500;">Reason for Rejection:</td>
+            <td style="padding: 6px 0; color: #b91c1c; font-weight: 600; text-align: right;">${reason || 'Not specified'}</td>
+          </tr>
+        </table>
+      </div>
+      <p style="margin: 0 0 16px 0;">Your points have been fully refunded to your contributor account balance, and you can re-apply once any concerns are resolved.</p>
+      <p style="margin: 0;">If you have any questions or believe this was an error, please reach out to us at <a href="mailto:edulumix@gmail.com" style="color: #2563eb; text-decoration: none;">edulumix@gmail.com</a>.</p>
+    `;
+
+    const mailOptions = {
+      from: `"EduLumix" <${this.configService.get<string>('SMTP_USER') || 'edulumix@gmail.com'}>`,
+      to: email,
+      subject: 'Reward Claim Update - EduLumix',
+      html: this.getBaseTemplate('Claim Request Update', 'Declined', '#fee2e2', '#b91c1c', htmlContent),
+    };
+
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error('Error sending claim rejected email:', error);
     }
   }
 }

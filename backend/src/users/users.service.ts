@@ -198,12 +198,17 @@ export class UsersService {
       throw new ForbiddenException('Cannot modify super admin');
     }
 
-    await this.userModel.findByIdAndDelete(id).exec();
+    user.status = 'rejected';
+    user.rejectionReason = reason;
+    await user.save();
+
+    // Send account rejected email
+    await this.mailerService.sendAccountRejectedEmail(user.email, user.name, reason);
 
     return {
       success: true,
-      message: `User ${user.name} has been rejected and permanently deleted`,
-      data: null,
+      message: `User ${user.name} has been rejected`,
+      data: user,
     };
   }
 

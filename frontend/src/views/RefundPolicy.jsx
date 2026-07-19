@@ -105,7 +105,7 @@ const RefundPolicy = () => {
               To request a refund:
             </p>
             <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-2 mb-6">
-              <li>Email us at <a href="mailto:refunds@edulumix.com" className="text-blue-600 dark:text-blue-400 hover:underline">refunds@edulumix.com</a></li>
+              <li>Email us at <a href="mailto:edulumix@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">edulumix@gmail.com</a></li>
               <li>Include your order ID or transaction reference</li>
               <li>Provide the reason for your refund request</li>
               <li>Our team will review your request within 2-3 business days</li>
@@ -134,8 +134,8 @@ const RefundPolicy = () => {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Contact Us</h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               If you have any questions about our Refund Policy, please contact us at{' '}
-              <a href="mailto:support@edulumix.com" className="text-blue-600 dark:text-blue-400 hover:underline">
-                support@edulumix.com
+              <a href="mailto:edulumix@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                edulumix@gmail.com
               </a>
               {' '}or reach us via WhatsApp for faster assistance.
             </p>
